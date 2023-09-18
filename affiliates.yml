@@ -161,6 +161,8 @@ components:
           description: The type of the account
     amount-retirement:
       type: object
+      required:
+        - "amount"
       properties:
         amount:
           type: number
@@ -178,6 +180,12 @@ components:
           description: The error message
     affiliates:
       type: object
+      required:
+        - "name"
+        - "document"
+        - "email"
+        - "phone"
+        - "address"
       properties:
         name:
           type: string
@@ -194,10 +202,20 @@ components:
         address:
           type: string
           description: The address of the affiliate
-security:
-  - oauth2: [
-      'read:affiliates',
-      ]
 servers:
   - url: http://localhost:8080
+    description: Local server
 
+security:
+  - bearerAuth: [
+      'read',
+      'write']
+  - basicAuth: [
+      'read',
+      'write']
+  - apiKeyAuth: [
+      'read',
+      'write']
+  - oauth2: [
+      'read',
+      'write']
