@@ -1,0 +1,8 @@
+{
+    "yaml.schemas": {
+        "swaggerviewer:openapi": [
+            "file:///c%3A/Users/geffr/OneDrive/Documents/GitHub/openAPI/doc.yml",
+            "file:///c%3A/Users/geffr/OneDrive/Documents/GitHub/openAPI/affiliates.yml"
+        ]
+    }
+}

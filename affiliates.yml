@@ -1,0 +1,203 @@
+openapi: 3.0.2
+info:
+  title: Affiliates
+  version: 1.0.0
+paths:
+  /affiliates:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/affiliates'
+        description: The affiliate to create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/affiliates'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+
+  /affiliates/{id}/balance:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balance'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/amount-retirement'
+        description: The amount of money to be added to the account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balance'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /affiliates/{id}/beneficiary:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/beneficiary'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error' 
+
+components:
+  schemas:
+    balance:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The amount of money in the account
+        currency:
+          type: string
+          description: The currency of the account
+    beneficiary:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the beneficiary
+        bank:
+          type: string
+          description: The name of the bank
+        account:
+          type: string
+          description: The account number
+        branch:
+          type: string
+          description: The branch number
+        document:
+          type: string
+          description: The document number
+        type:
+          type: string
+          description: The type of the account
+    amount-retirement:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+          description: The amount of money to be retired from the account
+    error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The error code
+        message:
+          type: string
+          description: The error message
+    affiliates:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the affiliate
+        document:
+          type: string
+          description: The document number
+        email:
+          type: string
+          description: The email of the affiliate
+        phone:
+          type: string
+          description: The phone number of the affiliate
+        address:
+          type: string
+          description: The address of the affiliate
+security:
+  - oauth2: [
+      'read:affiliates',
+      ]
+servers:
+  - url: http://localhost:8080
+
